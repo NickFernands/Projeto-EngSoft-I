@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public abstract class Usuarios {
     private int codigo;
     private String nome;
@@ -7,18 +9,49 @@ public abstract class Usuarios {
 
     private int numReservas;
 
+    private int numEmprestimos;
+    private int limiteDeEmprestimo;
+
     public void setEstado(State estado) {
         this.estado = estado;
     }
 
-    public void emprestimoBemSucedido(String tituloLivro, String dataEmprestimo, State status, String dataDevolucao) { //Seção 3.5.b parte 1
+    public State getEstado() {
+        return estado;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public int getLimiteDeEmprestimo() {
+        return limiteDeEmprestimo;
+    }
+
+    public int getNumEmprestimos() {
+        return numEmprestimos;
+    }
+
+    public int getTempoDeEmprestimo() {
+        return tempoDeEmprestimo;
+    }
+
+    public void emprestimoBemSucedido(String tituloLivro, LocalDateTime dataEmprestimo, LocalDateTime dataDevolucao) { //Seção 3.5.b parte 1
         //Precisa add um objeto no Array de Histórico de Empréstimos que contenha título, data de empréstimo, status(finalizado ou em curso),
         //data devolucao (realizada ou prevista)
+
+        //Tem que add no numEmprestimos também
+
+        //Tem que lembrar que, quando a DataDevolução passar e o livro ainda não tiver sido devolvido, tem que ativar o Estado.setState("Devedor")
     }
 
     public void reservaBemSucedida(String tituloLivro) { //Seção 3.5.b parte 2
         //Precisa add um objeto no Array de Reservas que contenha tanto o título que tá sendo passado quanto a data atual
         //a data atual deve vir de um método estático que provavelmente vem da Biblioteca
+    }
+
+    public void livroDevolvido(Exemplares livro) {
+
     }
 
 
