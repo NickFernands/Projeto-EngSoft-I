@@ -1,6 +1,6 @@
 import java.util.List;
 
-public abstract class Livros implements Observable {
+public class Livros implements Observable {
 
     public int id;
     public String titulo;

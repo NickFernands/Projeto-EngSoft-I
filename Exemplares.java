@@ -1,4 +1,4 @@
-public abstract class Exemplares {
+public class Exemplares {
     public int livroID;
     public int exemplarID;
     public int status; // 0 - Livre | 1 - Emprestado
