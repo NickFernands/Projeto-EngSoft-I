@@ -33,15 +33,15 @@ public class Biblioteca {
         listaLivros.add(new Livros(400, "Design Patterns: Elements of Reusable Object-Oriented Software", "Addison-Wesley Professional", "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides", "1", "1994"));
         listaLivros.add(new Livros(401, "UML Distilled: A Brief Guide to the Standard Object Modeling Language", "Addison-Wesley Professional", "Martin Fowler", "3", "2003"));
 
-        new Exemplares(listaLivros.get(0), 1);
-        new Exemplares(listaLivros.get(0), 2);
-        new Exemplares(listaLivros.get(1), 3);
-        new Exemplares(listaLivros.get(2), 4);
-        new Exemplares(listaLivros.get(3), 5);
-        new Exemplares(listaLivros.get(4), 6);
-        new Exemplares(listaLivros.get(4), 7);
-        new Exemplares(listaLivros.get(6), 8);
-        new Exemplares(listaLivros.get(6), 9);
+        new Exemplares(findLivro(100), 1);
+        new Exemplares(findLivro(100), 2);
+        new Exemplares(findLivro(101), 3);
+        new Exemplares(findLivro(200), 4);
+        new Exemplares(findLivro(201), 5);
+        new Exemplares(findLivro(300), 6);
+        new Exemplares(findLivro(300), 7);
+        new Exemplares(findLivro(400), 8);
+        new Exemplares(findLivro(400), 9);
 
     }
 
