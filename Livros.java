@@ -203,6 +203,10 @@ public class Livros implements Observable {
         return titulo;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
     public void registerObserver(Observers o) { //Seção 3.4 - Biblioteca deve buscar o Usuario e tratá-lo como Observers e passar para esse método do livro
         observadores.add(o);
     }

@@ -24,6 +24,10 @@ public abstract class Usuarios {
         return tipo;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
     public int getLimiteDeEmprestimo() {
         return limiteDeEmprestimo;
     }
