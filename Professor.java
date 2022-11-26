@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+
 public class Professor extends Usuarios implements Observers{
+
     private int codigo;
     private String nome;
     private String tipo = "Professor";
-
     private int tempoDeEmprestimo = 4;
-
     private State estado;
+    private final ArrayList<Emprestimo> emprestimosCorrentes = new ArrayList<Emprestimo>();
+    private final ArrayList<Emprestimo> emprestimosPassados = new ArrayList<Emprestimo>();
+    private final ArrayList<Emprestimo> reservas = new ArrayList<Emprestimo>();
 
     public Professor(int codigo, String nome) {
         this.codigo = codigo;

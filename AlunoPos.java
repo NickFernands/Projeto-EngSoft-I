@@ -1,13 +1,16 @@
+import java.util.ArrayList;
+
 public class AlunoPos extends Usuarios {
+
     private int codigo;
     private String nome;
     private String tipo = "Aluno Pós-Graduação";
-
     private int tempoDeEmprestimo = 4;
-
     private int limiteDeEmprestimo = 4;
-
     private State estado;
+    private final ArrayList<Emprestimo> emprestimosCorrentes = new ArrayList<Emprestimo>();
+    private final ArrayList<Emprestimo> emprestimosPassados = new ArrayList<Emprestimo>();
+    private final ArrayList<Emprestimo> reservas = new ArrayList<Emprestimo>();
 
     public AlunoPos(int codigo, String nome) {
         this.codigo = codigo;

@@ -1,16 +1,19 @@
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public abstract class Usuarios {
+
     private int codigo;
     private String nome;
     private String tipo;
     private int tempoDeEmprestimo;
     private State estado;
-
     private int numReservas;
-
     private int numEmprestimos;
     private int limiteDeEmprestimo;
+    private final ArrayList<Emprestimo> emprestimosCorrentes = new ArrayList<Emprestimo>();
+    private final ArrayList<Emprestimo> emprestimosPassados = new ArrayList<Emprestimo>();
+    private final ArrayList<Emprestimo> reservas = new ArrayList<Emprestimo>();
 
     public void setEstado(State estado) {
         this.estado = estado;
@@ -57,8 +60,6 @@ public abstract class Usuarios {
     public void livroDevolvido(Exemplares livro) {
 
     }
-
-
 
     public String getNome() { return this.nome; }
 
