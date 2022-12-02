@@ -6,7 +6,9 @@ public class Biblioteca {
     //Caracterizando o Singleton
     private Biblioteca instancia;
 
-    private Biblioteca() {}
+    private Biblioteca() {
+        inicializarListas();
+    }
 
     public Biblioteca obterBiblioteca() {
         if (instancia == null) instancia = new Biblioteca();
