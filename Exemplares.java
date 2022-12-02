@@ -8,8 +8,6 @@ public class Exemplares {
     private LocalDateTime dataDevolucao;
     private Usuarios usuarioEmprestado;
 
-    private VozBiblioteca voz = VozBiblioteca.obterVoz();
-
     public Exemplares(Livros dono, int codigo) {
         this.dono = dono;
         this.codigo = codigo;

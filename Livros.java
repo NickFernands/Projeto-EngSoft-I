@@ -14,9 +14,6 @@ public class Livros implements Observable {
     private int numReservas = 0;
     private int numEmprestados = 0;
 
-    public VozBiblioteca voz = VozBiblioteca.obterVoz();
-
-
     // Todos os métodos aqui recebem o userID que foi dado na linha de comando
     // Deve ser evitado tratar esses dados utilizando "if" e "switch" - Usuário deve ter métodos que permitam acessar os valores chaves (ex: dias de empréstimo ou limite de empréstimos)
     // Note que o tratamento de valores limites e algumas regras em geral variam em aplicação dependendo do tipo de usuário (Checar seção 3)
@@ -50,7 +47,7 @@ public class Livros implements Observable {
 
         //Condição de falha de Devedor (ii)
         if (usuario.getEstado().getNome().equals("Devedor")) {
-            voz.falar("Livro " + titulo + "não pode ser emprestado para [NomeDoUsuario] por usuário ter status de devedor.\n");
+            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " por usuário ter status de devedor.\n");
             return 0;
         }
 
@@ -71,7 +68,7 @@ public class Livros implements Observable {
         }
         //Condição de falha de Disponibilidade (i)
         if (disponibilidade==0) {
-            voz.falar("Livro " + titulo + "não pode ser emprestado para [NomeDoUsuario] por não haver mais exemplares disponíveis no momento.\n");
+            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " por não haver mais exemplares disponíveis no momento.\n");
             return 0;
         }
 
@@ -90,13 +87,13 @@ public class Livros implements Observable {
         //Caso seja professor E tenha feito reserva
         if (usuario.getTipo().equals("Professor") && reservado==1) {
             emprestimoDeuCerto(livro, usuario);
-            voz.falar("Livro " + titulo + "emprestado para [NomeDoUsuario] e reserva excluída do sistema.\n");
+            System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + " e reserva excluída do sistema.\n");
             return 1;
         }
         //Caso seja professor E não tenha feito reserva
         if (usuario.getTipo().equals("Professor")) {
             emprestimoDeuCerto(livro, usuario);
-            voz.falar("Livro " + titulo + "emprestado para [NomeDoUsuario].\n");
+            System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + " .\n");
             return 1;
         }
 
@@ -104,32 +101,32 @@ public class Livros implements Observable {
 
         //Usuario atingiu limite de emprestimos (iii)
         if (usuario.getNumEmprestimos() >= usuario.getLimiteDeEmprestimo()) {
-            voz.falar("Livro " + titulo + "não pode ser emprestado para [NomeDoUsuario] por usuário ter atingido o número limite de livros emprestados simultâneamente.\n");
+            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " por usuário ter atingido o número limite de livros emprestados simultâneamente.\n");
             return 0;
         }
 
         //Usuario já tem um empréstimo daquele livro (vi)
         if (jaEmprestado>0) {
-            voz.falar("Livro " + titulo + "não pode ser emprestado para [NomeDoUsuario] pelo por usuário já ter uma cópia desse livro em mãos.\n");
+            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " pelo por usuário já ter uma cópia desse livro em mãos.\n");
             return 0;
         }
 
         //Caso já tenha reservas demais pro livro e o usuário não tenha reserva (iv)
         if (numReservas>disponibilidade && reservado==0) {
-            voz.falar("Livro " + titulo + "não pode ser emprestado para [NomeDoUsuario] pelo número de reservas existentes já ter atingido o valor do número de exemplares disponíveis do livro.\n");
+            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " pelo número de reservas existentes já ter atingido o valor do número de exemplares disponíveis do livro.\n");
             return 0;
         }
 
         //Caso já tenha reservado
         if (reservado==1) {
             emprestimoDeuCerto(livro, usuario);
-            voz.falar("Livro " + titulo + "emprestado para [NomeDoUsuario] e reserva excluída do sistema.\n");
+            System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + " e reserva excluída do sistema.\n");
             return 1;
         }
 
         //Caso não tenha reservado mas ainda tem mais exemplares do que reservas
         emprestimoDeuCerto(livro, usuario);
-        voz.falar("Livro " + titulo + "emprestado para [NomeDoUsuario].\n");
+        System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + ".\n");
         return 1;
 
     }
@@ -148,7 +145,7 @@ public class Livros implements Observable {
 
                 usuario.livroDevolvido(listaExemplares.get(i)); //Passar pro usuario, por algum método dele, as informações que precisam para atualizar no array de histórico de empréstimos e tal
 
-                voz.falar("Devolução do livro " + titulo + " por [NomeDoUsuario] realizada com sucesso.\n");
+                System.out.println("Devolução do livro " + titulo + " por " + usuario.getNome() + " realizada com sucesso.\n");
                 return 1;
 
             }
@@ -156,7 +153,7 @@ public class Livros implements Observable {
         }
 
         //Caso de Falha da Devolução
-        voz.falar("Devolução do livro " + titulo + " por [NomeDoUsuario] não pôde ser efetivada por usuário não possuir uma cópia do livro\n");
+        System.out.println("Devolução do livro " + titulo + " por " + usuario.getNome() + " não pôde ser efetivada por usuário não possuir uma cópia do livro\n");
         return 0;
 
     }
@@ -166,12 +163,12 @@ public class Livros implements Observable {
 
         //Caso de Falha na Reserva
         if(usuario.getNumReservas()>=3) {
-            voz.falar("Livro " + titulo + "não pôde ser reservado por [NomeDoUsuario] pois o número de reservas simultâneas do usuário já alcançou seu limite.");
+            System.out.println("Livro " + titulo + "não pôde ser reservado por " + usuario.getNome() + " pois o número de reservas simultâneas do usuário já alcançou seu limite.\n");
             return 0;
         }
         //Caso de Sucesso na Reserva
         else {
-            voz.falar("Livro " + titulo + "foi reservado com sucesso por [NomeDoUsuario]");
+            System.out.println("Livro " + titulo + "foi reservado com sucesso por " + usuario.getNome() + ".\n");
             numReservas++;
             if(numReservas==3) notifyObservers(); //Passou de 2 para 3 reservas
             usuario.reservaBemSucedida(getTitulo());
@@ -183,18 +180,18 @@ public class Livros implements Observable {
     public void checarLivro() { //Seção 3.5.a
 
         //Listar o título e o número de reservas
-        voz.falar("Título: " + titulo + "\nNúmero de Reservas: " + numReservas + "\n");
+        System.out.println("Título: " + titulo + "\nNúmero de Reservas: " + numReservas + "\n");
 
         //Listar o nome de todos reservantes
         for (int i=0 ; i < reservantes.size() ; i++) {
-            voz.falar("Nome reservante: " + reservantes.get(i).getNome() + "\n");
+            System.out.println("Nome reservante: " + reservantes.get(i).getNome() + "\n");
         }
 
         //Listando informações sobre cada exemplar e finalizando a computação do comando
         for (int i=0 ; i < listaExemplares.size() ; i++) {
-            voz.falar("Informações de Exemplar: " + listaExemplares.get(i).getCodigo() + " - " + listaExemplares.get(i).getStatus());
-            if (listaExemplares.get(i).getStatus().getNome().equals("Emprestado")) voz.falar(" - " + listaExemplares.get(i).getEmprestado() + listaExemplares.get(i).getDataEmprestimo() + listaExemplares.get(i).getDataDevolucao() +"\n");
-            else voz.falar("\n");
+            System.out.println("Informações de Exemplar: " + listaExemplares.get(i).getCodigo() + " - " + listaExemplares.get(i).getStatus());
+            if (listaExemplares.get(i).getStatus().getNome().equals("Emprestado")) System.out.println(" - " + listaExemplares.get(i).getEmprestado() + listaExemplares.get(i).getDataEmprestimo() + listaExemplares.get(i).getDataDevolucao() +"\n");
+            else System.out.println("\n");
         }
 
     }
