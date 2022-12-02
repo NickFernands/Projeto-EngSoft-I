@@ -32,6 +32,9 @@ public class Livros implements Observable {
         listaExemplares.add(exemplar);
     }
 
+
+    //Seção de Empréstimo
+
     private void emprestimoDeuCerto(Exemplares livro, Usuarios usuario, boolean reservado) { //Shortcut para evitar repetição de código no método emprestar()
         if (reservado) {
             numReservas--;
@@ -93,10 +96,10 @@ public class Livros implements Observable {
         }
         return false;
 
-
-
-
     }
+
+
+    //Seção de Devolução
 
     public boolean devolucao(Usuarios usuario) { //Seção 3.2 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
 
@@ -126,6 +129,9 @@ public class Livros implements Observable {
     }
 
 
+
+    //Seção de Reserva
+
     public boolean reserva(Usuarios usuario) { //Seção 3.3 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
 
         //Caso de Falha na Reserva
@@ -143,6 +149,10 @@ public class Livros implements Observable {
         }
 
     }
+
+
+
+    //Checar Livro pelo comando "liv"
 
     public void checarLivro() { //Seção 3.5.a
 
@@ -163,17 +173,22 @@ public class Livros implements Observable {
 
     }
 
+
+    //Gets da Classe
+
     public String getTitulo() {
         return titulo;
     }
-
     public int getNumReservas() {
         return numReservas;
     }
-
     public int getCodigo() {
         return codigo;
     }
+
+
+
+    //Implementação de Observers
 
     public void registerObserver(Observers o) { //Seção 3.4 - Biblioteca deve buscar o Usuario e tratá-lo como Observers e passar para esse método do livro
         observadores.add(o);

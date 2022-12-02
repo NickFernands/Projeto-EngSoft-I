@@ -22,12 +22,30 @@ public class Exemplares {
         return codigo;
     }
 
+    public State getStatus() {
+        return status;
+    }
+
+    public Usuarios getUsuarioEmprestado() {
+        return usuarioEmprestado;
+    }
+
     public LocalDateTime getDataDevolucao() {
         return dataDevolucao;
     }
 
     public LocalDateTime getDataEmprestimo() {
         return dataEmprestimo;
+    }
+
+
+
+    public void setStatus(State status) {
+        this.status = status;
+    }
+
+    public void setUsuarioEmprestado(Usuarios usuarioEmprestado) {
+        this.usuarioEmprestado = usuarioEmprestado;
     }
 
     public void setDataDevolucao(LocalDateTime dataDevolucao) {
@@ -38,19 +56,4 @@ public class Exemplares {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public State getStatus() {
-        return status;
-    }
-
-    public Usuarios getUsuarioEmprestado() {
-        return usuarioEmprestado;
-    }
-
-    public void setUsuarioEmprestado(Usuarios usuarioEmprestado) {
-        this.usuarioEmprestado = usuarioEmprestado;
-    }
-
-    public void setStatus(State status) {
-        this.status = status;
-    }
 }
