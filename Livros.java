@@ -8,7 +8,7 @@ public class Livros implements Observable {
     private String autores;
     private String edicao;
     private String anoPublicacao;
-    private List<Exemplares> listaExemplares;
+    public List<Exemplares> listaExemplares;
     private List<Observers> observadores;
     private List<Usuarios> reservantes;
     private int numReservas = 0;
@@ -32,8 +32,12 @@ public class Livros implements Observable {
         listaExemplares.add(exemplar);
     }
 
-    private void emprestimoDeuCerto(Exemplares livro, Usuarios usuario) { //Shortcut para evitar repetição de código no método emprestar()
-        numReservas--;
+    private void emprestimoDeuCerto(Exemplares livro, Usuarios usuario, boolean reservado) { //Shortcut para evitar repetição de código no método emprestar()
+        if (reservado) {
+            numReservas--;
+            int i = reservantes.indexOf(usuario);
+            if (i>=0) reservantes.remove(usuario);
+        }
         numEmprestados++;
         livro.getStatus().changeState();
         livro.setUsuarioEmprestado(usuario);
@@ -42,96 +46,59 @@ public class Livros implements Observable {
         usuario.emprestimoBemSucedido(titulo, livro.getDataEmprestimo() , livro.getDataDevolucao());
     }
 
-    public int emprestar(Usuarios usuario) { //Seção 3.1 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
-        //SEMPRE que alguém pegar o livro, cuidar de dar o assign para algum dos exemplares
+    public boolean emprestar(Usuarios usuario) { //Seção 3.1
 
-        //Condição de falha de Devedor (ii)
-        if (usuario.getEstado().getNome().equals("Devedor")) {
-            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " por usuário ter status de devedor.\n");
-            return 0;
-        }
+        //Realizando Checagens gerais pertinentes a esta classe antes de especializar:
 
-        //Checando disponibilidade de exemplar e se o usuário já tem ele em mãos (i)
-        int jaEmprestado = 0;
+        //Checagem se há disponibilidade e se o usuário já possui o livro em mãos. (i) e (vi)
+        boolean jaEmprestado = false;
         int disponibilidade = 0;
-        Exemplares livro = null;
+        Exemplares exemplar = null;
+
         for ( int i=0 ; i < listaExemplares.size() ; i++ ) {
+
             if (listaExemplares.get(i).getStatus().getNome().equals("Livre")) {
                 disponibilidade++;
+                //Atribuindo o Exemplar, que talvez será emprestado, a uma variável
                 if (disponibilidade==1) { //Atribuindo o Exemplar, que talvez será emprestado, a uma variável
-                    livro = listaExemplares.get(i);
-                }
-                if (listaExemplares.get(i).getUsuarioEmprestado()==usuario) { //Definindo que esse usuário já tem um livro desse emprestado
-                    jaEmprestado++;
+                    exemplar = listaExemplares.get(i);
                 }
             }
+
+            if (listaExemplares.get(i).getUsuarioEmprestado()==usuario) { //Definindo que esse usuário já tem um livro desse emprestado
+                jaEmprestado = true;
+            }
+
         }
+
         //Condição de falha de Disponibilidade (i)
         if (disponibilidade==0) {
             System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " por não haver mais exemplares disponíveis no momento.\n");
-            return 0;
+            return false;
         }
 
-
-        //Checagem se o usuário fez a reserva do livro
-        int reservado = 0;
+        //Descobrir se o usuário é reservante desse livro ou não
+        boolean reservado = false;
         for ( int i=0 ; i < listaExemplares.size() ; i++ ) {
             if (reservantes.get(i)==usuario) {
-                reservado = 1;
+                reservado = true;
                 break;
             }
         }
 
-        //Se chegar até aqui, Usuários da classe privilegiada já podem pegar o livro independentemente de reserva ou não
 
-        //Caso seja professor E tenha feito reserva
-        if (usuario.getTipo().equals("Professor") && reservado==1) {
-            emprestimoDeuCerto(livro, usuario);
-            System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + " e reserva excluída do sistema.\n");
-            return 1;
+        if (usuario.emprestimoTeste.podeEmprestar(usuario, this, exemplar, jaEmprestado, disponibilidade, reservado)) {
+            emprestimoDeuCerto(exemplar, usuario, reservado);
+            return true;
         }
-        //Caso seja professor E não tenha feito reserva
-        if (usuario.getTipo().equals("Professor")) {
-            emprestimoDeuCerto(livro, usuario);
-            System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + " .\n");
-            return 1;
-        }
+        return false;
 
-        //A partir daqui, estamos com Classe não privilegiada
 
-        //Usuario atingiu limite de emprestimos (iii)
-        if (usuario.getNumEmprestimos() >= usuario.getLimiteDeEmprestimo()) {
-            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " por usuário ter atingido o número limite de livros emprestados simultâneamente.\n");
-            return 0;
-        }
 
-        //Usuario já tem um empréstimo daquele livro (vi)
-        if (jaEmprestado>0) {
-            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " pelo por usuário já ter uma cópia desse livro em mãos.\n");
-            return 0;
-        }
-
-        //Caso já tenha reservas demais pro livro e o usuário não tenha reserva (iv)
-        if (numReservas>disponibilidade && reservado==0) {
-            System.out.println("Livro " + titulo + "não pode ser emprestado para " + usuario.getNome() + " pelo número de reservas existentes já ter atingido o valor do número de exemplares disponíveis do livro.\n");
-            return 0;
-        }
-
-        //Caso já tenha reservado
-        if (reservado==1) {
-            emprestimoDeuCerto(livro, usuario);
-            System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + " e reserva excluída do sistema.\n");
-            return 1;
-        }
-
-        //Caso não tenha reservado mas ainda tem mais exemplares do que reservas
-        emprestimoDeuCerto(livro, usuario);
-        System.out.println("Livro " + titulo + "emprestado para " + usuario.getNome() + ".\n");
-        return 1;
 
     }
 
-    public int devolucao(Usuarios usuario) { //Seção 3.2 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
+    public boolean devolucao(Usuarios usuario) { //Seção 3.2 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
 
         for (int i=0 ; i < listaExemplares.size() ; i++) { //Busca nos exemplares o usuario em questão
 
@@ -146,7 +113,7 @@ public class Livros implements Observable {
                 usuario.livroDevolvido(listaExemplares.get(i)); //Passar pro usuario, por algum método dele, as informações que precisam para atualizar no array de histórico de empréstimos e tal
 
                 System.out.println("Devolução do livro " + titulo + " por " + usuario.getNome() + " realizada com sucesso.\n");
-                return 1;
+                return true;
 
             }
 
@@ -154,17 +121,17 @@ public class Livros implements Observable {
 
         //Caso de Falha da Devolução
         System.out.println("Devolução do livro " + titulo + " por " + usuario.getNome() + " não pôde ser efetivada por usuário não possuir uma cópia do livro\n");
-        return 0;
+        return false;
 
     }
 
 
-    public int reserva(Usuarios usuario) { //Seção 3.3 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
+    public boolean reserva(Usuarios usuario) { //Seção 3.3 - Importante fazer a Biblioteca buscar o Usuário e enviar ele pra essa função
 
         //Caso de Falha na Reserva
         if(usuario.getNumReservas()>=3) {
             System.out.println("Livro " + titulo + "não pôde ser reservado por " + usuario.getNome() + " pois o número de reservas simultâneas do usuário já alcançou seu limite.\n");
-            return 0;
+            return false;
         }
         //Caso de Sucesso na Reserva
         else {
@@ -172,7 +139,7 @@ public class Livros implements Observable {
             numReservas++;
             if(numReservas==3) notifyObservers(); //Passou de 2 para 3 reservas
             usuario.reservaBemSucedida(getTitulo());
-            return 1;
+            return true;
         }
 
     }
@@ -198,6 +165,10 @@ public class Livros implements Observable {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public int getNumReservas() {
+        return numReservas;
     }
 
     public int getCodigo() {

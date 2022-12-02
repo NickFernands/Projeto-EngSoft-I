@@ -15,6 +15,8 @@ public abstract class Usuarios {
     private final ArrayList<Emprestimo> emprestimosPassados = new ArrayList<Emprestimo>();
     private final ArrayList<Emprestimo> reservas = new ArrayList<Emprestimo>();
 
+    public EmprestimoTeste emprestimoTeste; //todo Implementar nos construtores das classes o EmprestimoTeste correto
+
     public void setEstado(State estado) {
         this.estado = estado;
     }
