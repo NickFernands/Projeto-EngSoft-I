@@ -63,6 +63,10 @@ public abstract class Usuarios {
 
     }
 
+    public abstract void verificarDatas();
+
+    public abstract void listarEmprestimosEReservas();
+
     public String getNome() { return this.nome; }
 
     public int getNumReservas() {

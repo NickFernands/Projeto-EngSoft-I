@@ -18,6 +18,10 @@ public class Exemplares {
         return usuarioEmprestado.getNome();
     }
 
+    public Livros getDono() {
+        return dono;
+    }
+
     public int getCodigo() {
         return codigo;
     }

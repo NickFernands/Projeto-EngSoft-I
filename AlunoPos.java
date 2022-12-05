@@ -70,15 +70,29 @@ public class AlunoPos extends Usuarios {
     }
 
     public void livroDevolvido(Exemplares livro) {
-        /*for(Emprestimo e : emprestimosCorrentes) {
-            if(livro.get == e.getTituloLivro())
-        }*/
+        String titulo = livro.getDono().getTitulo();
+
+        for(Emprestimo e : emprestimosCorrentes) {
+            if(Objects.equals(titulo, e.getTituloLivro())) {
+
+                if(Objects.equals(getStateName(), "Devedor")) {
+                    changeStatus();
+                }
+
+                e.changeState();
+                emprestimosPassados.add(e);
+                emprestimosCorrentes.remove(e);
+
+            }
+        }
+
+        verificarDatas();
     }
 
     public void verificarDatas() {
         if(!Objects.equals(getStateName(), "Devedor")) {
             for(Emprestimo e : emprestimosCorrentes) {
-                if(e.getDataDevolucaoPrevista().equals(LocalDateTime.now()) ) {
+                if(e.getDataDevolucaoPrevista().isAfter(LocalDateTime.now())) {
                     changeStatus();
                 }
             }
