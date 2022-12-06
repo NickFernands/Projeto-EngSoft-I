@@ -27,9 +27,10 @@ public class Invoker {
     }
 
     public void invoke() {
-        comandos.get(firstArg).execute();
 
-        if (!Objects.equals(firstArg, "sai")) {
+        comandos.get(firstArg).execute(); //Executa primeiro argumento
+
+        if (!Objects.equals(firstArg, "sai")) { //Se o argumento não for "sai", chama de novo - Assim, outros métodos não precisam se preocupar em passar o controle de volta pro Invoker
             userInput();
         }
 
@@ -39,6 +40,7 @@ public class Invoker {
     //Usar essa função como a "Static" mencionada em outros métodos sempre que
     //ou argumentos falhem (aqui no Invoker) ou quando Usuário/Livro não são encontrados lá na Biblioteca
     public void userInput() {
+        //System.out.println("myProgram> "); //Descomenta pra ter a parte do myProgram> no começo
         ArrayList<String> inputs = new ArrayList<String>();
         String msg = scanner.nextLine();
         String[] palavras = msg.split("\s");

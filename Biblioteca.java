@@ -66,7 +66,6 @@ public class Biblioteca {
 
         if (usuarioDesejado==null) {
             System.out.println("Usuário de código " + codUsuario + " não existe no sistema.\n");
-            //todo caso ainda seja null, dizer que usuário não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
         }
 
         return usuarioDesejado;
@@ -82,8 +81,7 @@ public class Biblioteca {
         }
 
         if (livroDesejado==null) {
-            System.out.println("Usuário de código " + codLivro + " não existe no sistema.\n");
-            //todo caso ainda seja null, dizer que livro não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
+            System.out.println("Livro de código " + codLivro + " não existe no sistema.\n");
         }
 
         return livroDesejado;
@@ -92,41 +90,42 @@ public class Biblioteca {
     public void emprestimo(int codUsuario, int codLivro) { //3.1
         Usuarios usuario = findUser(codUsuario);
         Livros livro = findLivro(codLivro);
-        livro.emprestar(usuario);
+        if (!(usuario==null) && !(livro==null)) livro.emprestar(usuario); // !(x||y) === !x && !y
+        //Caso não cumpra, o programa devolve controle pro Invoker, note que o erro já foi enviado pelo findUser ou findLivro
     }
 
     public void devolucao(int codUsuario, int codLivro) { //3.2
         Usuarios usuario = findUser(codUsuario);
         Livros livro = findLivro(codLivro);
-        livro.devolucao(usuario);
+        if (!(usuario==null) && !(livro==null)) livro.devolucao(usuario);
     }
 
     public void reserva(int codUsuario, int codLivro) { //3.3
         Usuarios usuario = findUser(codUsuario);
         Livros livro = findLivro(codLivro);
-        livro.reserva(usuario);
+        if (!(usuario==null) && !(livro==null)) livro.reserva(usuario);
     }
 
     public void observar(int codUsuario, int codLivro) { //3.4
         Professor usuario = (Professor) findUser(codUsuario); //Aqui será Funcionarios mais pra frente
         Livros livro = findLivro(codLivro);
-        livro.registerObserver(usuario);
+        if (!(usuario==null) && !(livro==null)) livro.registerObserver(usuario);
     }
 
     public void consultarLivro(int codLivro) { //3.5.a
         Livros livro = findLivro(codLivro);
-        livro.checarLivro();
+        if (!(livro==null)) livro.checarLivro();
     }
 
     public void consultarUsuario(int codUsuario) { //3.5.b
         Usuarios usuario = findUser(codUsuario);
-        usuario.listarEmprestimosEReservas();
+        if (!(usuario==null)) usuario.listarEmprestimosEReservas();
         //Ativar aqui o método de usuario que vai fazer essa busca descrita na seção 3.5.b do enunciado do trabalho
     }
 
     public void consultarNotificacao (int codUsuario) { //3.5.c
         Usuarios usuario = findUser(codUsuario);
-        usuario.getNNotificaoes();
+        if (!(usuario==null)) usuario.getNNotificaoes();
         //Ativar aqui o método de usuário que vai retornar esse dado de quantas vezes ele foi notificado sobre algum livro que observa - descrito na seção 3.5.c do trabalho
     }
 
