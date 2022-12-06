@@ -74,13 +74,20 @@ public class Invoker {
         String msg = scanner.nextLine();
         String[] palavras = msg.split("\s");
 
-        inputs.addAll(Arrays.asList(palavras).subList(0, 3));
+        for(int i = 0; i< palavras.length; i++ ){
+            inputs.add(palavras[i]);
+        }
 
-        scanner.close();
-
-        firstArg = inputs.get(0);
-        secondArg = inputs.get(1);
-        thirdArg = inputs.get(2);
+        if(inputs.size() == 1) {
+            firstArg = inputs.get(0);
+        } else if(inputs.size() == 2) {
+            firstArg = inputs.get(0);
+            secondArg = inputs.get(1);
+        } else {
+            firstArg = inputs.get(0);
+            secondArg = inputs.get(1);
+            thirdArg = inputs.get(2);
+        }
 
         invoke();
     }
