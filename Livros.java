@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Livros implements Observable {
@@ -8,7 +9,7 @@ public class Livros implements Observable {
     private String autores;
     private String edicao;
     private String anoPublicacao;
-    public List<Exemplares> listaExemplares;
+    public List<Exemplares> listaExemplares = new ArrayList<Exemplares>();
     private List<Observers> observadores;
     private List<Usuarios> reservantes;
     private int numReservas = 0;

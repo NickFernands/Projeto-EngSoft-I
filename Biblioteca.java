@@ -1,7 +1,4 @@
-import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class Biblioteca {
 
@@ -18,9 +15,9 @@ public class Biblioteca {
         return instancia;
     }
 
-    private List<Livros> listaLivros;
+    private List<Livros> listaLivros = new ArrayList<Livros>();
 
-    private List<Usuarios> listaUsuarios;
+    private List<Usuarios> listaUsuarios = new ArrayList<Usuarios>();
 
     private void inicializarListas() { //Instancia todos os elementos de exemplo
 
@@ -74,7 +71,7 @@ public class Biblioteca {
     private Livros findLivro(int codLivro) { //Acha qual o livro dado seu código
         Livros livroDesejado=null;
         for (int i=0 ; i < listaLivros.size() ; i++) {
-            if (listaUsuarios.get(i).getCodigo()==codLivro) {
+            if (listaLivros.get(i).getCodigo()==codLivro) {
                 livroDesejado = listaLivros.get(i);
                 break;
             }

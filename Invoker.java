@@ -15,6 +15,11 @@ public class Invoker {
     public Map<String, Command> comandos = new HashMap<String, Command>();
 
     public Invoker () {
+
+        userInput();
+    }
+
+    public void comandosss() {
         comandos.put("emp", new EmprestimoCommand(biblioteca, secondArg, thirdArg)); //emprestimo
         comandos.put("dev", new DevolucaoCommand(biblioteca, secondArg, thirdArg) ); //devolução
         comandos.put("res", new ReservaCommand(biblioteca, secondArg, thirdArg) ); //reserva
@@ -23,7 +28,6 @@ public class Invoker {
         comandos.put("usu", new ConsultarUsuarioCommand(biblioteca, secondArg)); //lista de emprestimos/reservas de usuarios
         comandos.put("ntf", new ConsultarNotificacaoCommand(biblioteca, secondArg)); //notificar observadorres
         comandos.put("sai", new SairCommand(biblioteca)); //sair do sistema
-        userInput();
     }
 
     public void invoke() {
