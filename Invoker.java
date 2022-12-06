@@ -23,10 +23,16 @@ public class Invoker {
         comandos.put("usu", new ConsultarUsuarioCommand(biblioteca, secondArg)); //lista de emprestimos/reservas de usuarios
         comandos.put("ntf", new ConsultarNotificacaoCommand(biblioteca, secondArg)); //notificar observadorres
         comandos.put("sai", new SairCommand(biblioteca)); //sair do sistema
+        userInput();
     }
 
     public void invoke() {
         comandos.get(firstArg).execute();
+
+        if (!Objects.equals(firstArg, "sai")) {
+            userInput();
+        }
+
     }
 
     //demonstrar de alguma forma q o usuario pode dar input novamente
