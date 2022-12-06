@@ -4,13 +4,13 @@ public class Biblioteca {
 
 
     //Caracterizando o Singleton
-    private Biblioteca instancia;
+    private static Biblioteca instancia;
 
     private Biblioteca() {
         inicializarListas();
     }
 
-    public Biblioteca obterBiblioteca() {
+    public static Biblioteca obterBiblioteca() {
         if (instancia == null) instancia = new Biblioteca();
         return instancia;
     }

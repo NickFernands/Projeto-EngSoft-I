@@ -6,7 +6,7 @@ public class Invoker {
     private Biblioteca biblioteca;
 
     {
-        biblioteca = biblioteca.obterBiblioteca();
+        biblioteca = Biblioteca.obterBiblioteca();
     }
 
     public Map<String, Command> comandos = new HashMap<String, Command>();
