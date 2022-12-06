@@ -126,6 +126,7 @@ public class Biblioteca {
 
     public void consultarNotificacao (int codUsuario) { //3.5.c
         Usuarios usuario = findUser(codUsuario);
+        usuario.getNNotificaoes();
         //Ativar aqui o método de usuário que vai retornar esse dado de quantas vezes ele foi notificado sobre algum livro que observa - descrito na seção 3.5.c do trabalho
     }
 

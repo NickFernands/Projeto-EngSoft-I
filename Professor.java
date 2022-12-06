@@ -2,13 +2,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Professor extends Usuarios implements Observers{
+public class Professor extends Usuarios implements Observers {
 
     private int codigo;
     private String nome;
     private String tipo = "Professor";
     private int tempoDeEmprestimo = 7;
     private State estado;
+    private int notificacao;
     private int numReservas = 0;
     private int numEmprestimos = 0;
 
@@ -20,6 +21,7 @@ public class Professor extends Usuarios implements Observers{
         this.codigo = codigo;
         this.nome = nome;
         this.estado = new StateNormal(this);
+        this.notificacao = 0;
     }
 
     public int getCodigo() {
@@ -161,6 +163,6 @@ public class Professor extends Usuarios implements Observers{
 
     @Override
     public void update(Livros livros) {
-
+        setNotificacao(getNotificacao()+1);
     }
 }

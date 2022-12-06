@@ -8,6 +8,7 @@ public abstract class Usuarios {
     private String tipo;
     private int tempoDeEmprestimo;
     private State estado;
+    private int notificacao;
     private int numReservas;
     private int numEmprestimos;
     private int limiteDeEmprestimo;
@@ -16,6 +17,9 @@ public abstract class Usuarios {
     private final ArrayList<Emprestimo> reservas = new ArrayList<Emprestimo>();
 
     public EmprestimoTeste emprestimoTeste; //todo Implementar nos construtores das classes o EmprestimoTeste correto
+
+    protected Usuarios() {
+    }
 
     public void setEstado(State estado) {
         this.estado = estado;
@@ -72,4 +76,17 @@ public abstract class Usuarios {
     public int getNumReservas() {
         return numReservas;
     }
+
+    public int getNotificacao() {
+        return notificacao;
+    }
+
+    public void setNotificacao(int notificacao) {
+        this.notificacao = notificacao;
+    }
+
+    public void getNNotificaoes() {
+        System.out.println("Usuário " + getNome() + " foi notificado um total de " + getNotificacao() + " vezes.\n");
+    }
+
 }
