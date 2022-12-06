@@ -1,4 +1,7 @@
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Biblioteca {
 
@@ -45,6 +48,7 @@ public class Biblioteca {
         new Exemplares(findLivro(400), 8);
         new Exemplares(findLivro(400), 9);
 
+        verificarDatas();
     }
 
 
@@ -129,7 +133,20 @@ public class Biblioteca {
         System.exit(0);
     }
 
+    public void verificarDatas() {
+        TimerTask repeatedTask = new TimerTask() {
+            public void run() {
 
+                for(Usuarios usuarios: listaUsuarios){
+                    usuarios.verificarDatas();
+                }
 
+            }
+        };
+        Timer timer = new Timer("Timer");
 
+        long delay = 1000L;
+        long period = 1000L * 60L * 60L * 24L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
 }
