@@ -10,8 +10,8 @@ public class Livros implements Observable {
     private String edicao;
     private String anoPublicacao;
     public List<Exemplares> listaExemplares = new ArrayList<Exemplares>();
-    private List<Observers> observadores;
-    private List<Usuarios> reservantes;
+    private List<Observers> observadores = new ArrayList<Observers>();
+    private List<Usuarios> reservantes = new ArrayList<Usuarios>();
     private int numReservas = 0;
     private int numEmprestados = 0;
 
