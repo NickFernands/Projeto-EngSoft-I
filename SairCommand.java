@@ -3,7 +3,7 @@ public class SairCommand implements Command{
     private Biblioteca biblioteca;
 
     public SairCommand(Biblioteca biblioteca) {
-        this.biblioteca = biblioteca;
+        this.biblioteca = biblioteca.obterBiblioteca();
     }
 
     @Override

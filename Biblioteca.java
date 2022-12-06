@@ -104,6 +104,7 @@ public class Biblioteca {
 
     public void consultarUsuario(int codUsuario) { //3.5.b
         Usuarios usuario = findUser(codUsuario);
+        usuario.listarEmprestimosEReservas();
         //Ativar aqui o método de usuario que vai fazer essa busca descrita na seção 3.5.b do enunciado do trabalho
     }
 

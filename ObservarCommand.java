@@ -3,7 +3,7 @@ public class ObservarCommand implements Command {
     private Biblioteca biblioteca;
 
     public ObservarCommand(Biblioteca biblioteca) {
-        this.biblioteca = biblioteca;
+        this.biblioteca = biblioteca.obterBiblioteca();
     }
 
 
