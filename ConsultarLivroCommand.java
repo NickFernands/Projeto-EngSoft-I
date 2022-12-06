@@ -3,14 +3,14 @@ public class ConsultarLivroCommand implements Command{
     private Biblioteca biblioteca;
     private int codLiv;
 
-    public ConsultarLivroCommand(Biblioteca biblioteca, String codLiv) {
+    public ConsultarLivroCommand(Biblioteca biblioteca) {
         this.biblioteca = biblioteca.obterBiblioteca();
-        this.codLiv = Integer.parseInt(codLiv);
     }
 
 
     @Override
     public void execute() {
+        this.codLiv = Integer.parseInt(Invoker.getSecondArg());
         biblioteca.consultarLivro(codLiv);
     }
 }

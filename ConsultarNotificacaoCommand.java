@@ -3,14 +3,14 @@ public class ConsultarNotificacaoCommand implements Command{
     private Biblioteca biblioteca;
     private int codUsu;
 
-    public ConsultarNotificacaoCommand(Biblioteca biblioteca, String codUsu) {
+    public ConsultarNotificacaoCommand(Biblioteca biblioteca) {
         this.biblioteca = biblioteca.obterBiblioteca();
-        this.codUsu = Integer.parseInt(codUsu);
     }
 
 
     @Override
     public void execute() {
+        this.codUsu = Integer.parseInt(Invoker.getSecondArg());
         biblioteca.consultarNotificacao(codUsu);
     }
 }

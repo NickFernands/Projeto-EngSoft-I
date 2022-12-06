@@ -4,15 +4,15 @@ public class EmprestimoCommand implements Command{
     private int codUsu;
     private int codLiv;
 
-    public EmprestimoCommand(Biblioteca biblioteca, String codUsu, String codLiv) {
+    public EmprestimoCommand(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
-        this.codUsu = Integer.parseInt(codUsu);
-        this.codLiv = Integer.parseInt(codLiv);
     }
 
 
     @Override
     public void execute() {
+        this.codUsu = Integer.parseInt(Invoker.getSecondArg());
+        this.codLiv = Integer.parseInt(Invoker.getThirdArg());
         biblioteca.emprestimo(this.codUsu, this.codLiv);
     }
 }

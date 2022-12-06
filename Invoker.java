@@ -9,25 +9,31 @@ public class Invoker {
     }
 
     private String firstArg; //Comando em si, ex: emp, dev, res...
-    private String secondArg; // Primeiro argumento seguindo o comando
-    private String thirdArg; // Segundo argumento seguindo o comando
+    private static String secondArg; // Primeiro argumento seguindo o comando
+    private static String thirdArg; // Segundo argumento seguindo o comando
     Scanner scanner = new Scanner(System.in);
     public Map<String, Command> comandos = new HashMap<String, Command>();
 
     public Invoker () {
 
+        comandos.put("emp", new EmprestimoCommand(biblioteca) ); //emprestimo
+        comandos.put("dev", new DevolucaoCommand(biblioteca) ); //devolução
+        comandos.put("res", new ReservaCommand(biblioteca) ); //reserva
+        comandos.put("obs", new ObservarCommand(biblioteca) ); //obersvar
+        comandos.put("liv", new ConsultarLivroCommand(biblioteca) ); //listar infos do livro
+        comandos.put("usu", new ConsultarUsuarioCommand(biblioteca) ); //lista de emprestimos/reservas de usuarios
+        comandos.put("ntf", new ConsultarNotificacaoCommand(biblioteca) ); //notificar observadorres
+        comandos.put("sai", new SairCommand(biblioteca) ); //sair do sistema
+
         userInput();
     }
 
-    public void comandosss() {
-        comandos.put("emp", new EmprestimoCommand(biblioteca, secondArg, thirdArg)); //emprestimo
-        comandos.put("dev", new DevolucaoCommand(biblioteca, secondArg, thirdArg) ); //devolução
-        comandos.put("res", new ReservaCommand(biblioteca, secondArg, thirdArg) ); //reserva
-        comandos.put("obs", new ObservarCommand(biblioteca, secondArg, thirdArg) ); //obersvar
-        comandos.put("liv", new ConsultarLivroCommand(biblioteca, secondArg) ); //listar infos do livro
-        comandos.put("usu", new ConsultarUsuarioCommand(biblioteca, secondArg)); //lista de emprestimos/reservas de usuarios
-        comandos.put("ntf", new ConsultarNotificacaoCommand(biblioteca, secondArg)); //notificar observadorres
-        comandos.put("sai", new SairCommand(biblioteca)); //sair do sistema
+    public static String getSecondArg() {
+        return secondArg;
+    }
+
+    public static String getThirdArg() {
+        return thirdArg;
     }
 
     public void invoke() {
