@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Invoker {
 
@@ -12,7 +11,7 @@ public class Invoker {
     private String firstArg; //Comando em si, ex: emp, dev, res...
     private String secondArg; // Primeiro argumento seguindo o comando
     private String thirdArg; // Segundo argumento seguindo o comando
-
+    Scanner scanner = new Scanner(System.in);
     public Map<String, Command> comandos = new HashMap<String, Command>();
 
     public Invoker () {
@@ -26,8 +25,25 @@ public class Invoker {
         comandos.put("sai", new SairCommand(biblioteca)); //sair do sistema
     }
 
-    public void invoke(String command) {
-        comandos.get(command).execute();
+    public void invoke() {
+        comandos.get(firstArg).execute();
+    }
+
+    //demonstrar de alguma forma q o usuario pode dar input novamente
+    //Usar essa função como a "Static" mencionada em outros métodos sempre que
+    //ou argumentos falhem (aqui no Invoker) ou quando Usuário/Livro não são encontrados lá na Biblioteca
+    public void userInput() {
+        ArrayList<String> inputs = new ArrayList<String>();
+        String msg = scanner.nextLine();
+        String[] palavras = msg.split("\s");
+
+        inputs.addAll(Arrays.asList(palavras).subList(0, 3));
+
+        scanner.close();
+
+        firstArg = inputs.get(0);
+        secondArg = inputs.get(1);
+        thirdArg = inputs.get(2);
     }
 }
 
