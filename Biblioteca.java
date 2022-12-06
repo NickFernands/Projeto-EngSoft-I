@@ -59,6 +59,8 @@ public class Biblioteca {
                 break;
             }
         }
+
+        //todo caso ainda seja null, dizer que usuário não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
         return usuarioDesejado;
     }
 
@@ -70,6 +72,8 @@ public class Biblioteca {
                 break;
             }
         }
+
+        //todo caso ainda seja null, dizer que livro não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
         return livroDesejado;
     }
 
