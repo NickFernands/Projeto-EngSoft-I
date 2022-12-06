@@ -60,7 +60,11 @@ public class Biblioteca {
             }
         }
 
-        //todo caso ainda seja null, dizer que usuário não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
+        if (usuarioDesejado==null) {
+            System.out.println("Usuário de código " + codUsuario + " não existe no sistema.\n");
+            //todo caso ainda seja null, dizer que usuário não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
+        }
+
         return usuarioDesejado;
     }
 
@@ -73,7 +77,11 @@ public class Biblioteca {
             }
         }
 
-        //todo caso ainda seja null, dizer que livro não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
+        if (livroDesejado==null) {
+            System.out.println("Usuário de código " + codLivro + " não existe no sistema.\n");
+            //todo caso ainda seja null, dizer que livro não foi encontrado e ativar o método estático do Invoker pra voltar pro myProgram>
+        }
+
         return livroDesejado;
     }
 
