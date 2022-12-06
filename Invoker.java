@@ -19,7 +19,7 @@ public class Invoker {
         comandos.put("dev", new DevolucaoCommand(biblioteca, secondArg, thirdArg) ); //devolução
         comandos.put("res", new ReservaCommand(biblioteca, secondArg, thirdArg) ); //reserva
         comandos.put("obs", new ObservarCommand(biblioteca, secondArg, thirdArg) ); //obersvar
-        comandos.put("liv", new ConsultarLivroCommand(biblioteca, thirdArg) ); //listar infos do livro
+        comandos.put("liv", new ConsultarLivroCommand(biblioteca, secondArg) ); //listar infos do livro
         comandos.put("usu", new ConsultarUsuarioCommand(biblioteca, secondArg)); //lista de emprestimos/reservas de usuarios
         comandos.put("ntf", new ConsultarNotificacaoCommand(biblioteca, secondArg)); //notificar observadorres
         comandos.put("sai", new SairCommand(biblioteca)); //sair do sistema
@@ -28,19 +28,38 @@ public class Invoker {
 
     public void invoke() {
 
-        comandos.get(firstArg).execute(); //Executa primeiro argumento
 
-        if (!Objects.equals(firstArg, "sai")) { //Se o argumento não for "sai", chama de novo - Assim, outros métodos não precisam se preocupar em passar o controle de volta pro Invoker
+        if(!comandos.containsKey(firstArg) || firstArg == null) {
+
+            System.out.println("Comando Inválido, insira o comando correto por gentileza \n");
             userInput();
-        }
 
+        } else if((firstArg.equals("emp") || firstArg.equals("dev") || firstArg.equals("res") || firstArg.equals("obs")) && (secondArg == null || thirdArg == null)) {
+
+            System.out.println("Ausência de argumentos, insira os argumentos correspondentes por gentileza \n");
+            userInput();
+
+        } else if((firstArg.equals("liv") || firstArg.equals("usu") || firstArg.equals("ntf")) && secondArg == null) {
+
+            System.out.println("Ausência de argumentos, insira os argumentos correspondentes por gentileza \n");
+            userInput();
+
+        } else {
+
+            comandos.get(firstArg).execute(); //Executa primeiro argumento
+
+            if (!Objects.equals(firstArg, "sai")) { //Se o argumento não for "sai", chama de novo - Assim, outros métodos não precisam se preocupar em passar o controle de volta pro Invoker
+                userInput();
+            }
+
+        }
     }
 
     //demonstrar de alguma forma q o usuario pode dar input novamente
     //Usar essa função como a "Static" mencionada em outros métodos sempre que
     //ou argumentos falhem (aqui no Invoker) ou quando Usuário/Livro não são encontrados lá na Biblioteca
     public void userInput() {
-        //System.out.println("myProgram> "); //Descomenta pra ter a parte do myProgram> no começo
+        System.out.println("myProgram> ");
         ArrayList<String> inputs = new ArrayList<String>();
         String msg = scanner.nextLine();
         String[] palavras = msg.split("\s");
@@ -52,6 +71,8 @@ public class Invoker {
         firstArg = inputs.get(0);
         secondArg = inputs.get(1);
         thirdArg = inputs.get(2);
+
+        invoke();
     }
 }
 
